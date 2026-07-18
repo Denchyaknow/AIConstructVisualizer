@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Launch AIConstructVisualizer
+GenericName=AI Construct Visualizer
+Comment=Start the local visualizer server and open it in a browser
+Exec=/home/edgesecure/AIBrain/launch-ai-construct-visualizer-ubuntu-arm64.sh
+TryExec=/home/edgesecure/AIBrain/launch-ai-construct-visualizer-ubuntu-arm64.sh
+Path=/home/edgesecure/AIBrain
+Icon=applications-graphics
+Terminal=false
+Categories=Graphics;
+StartupNotify=true

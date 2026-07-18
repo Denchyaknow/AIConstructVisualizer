@@ -39,6 +39,29 @@ npx serve .
 
 The repository can also be hosted directly on GitHub Pages, Netlify, Cloudflare Pages, or another static host. Publish the repository root; no build command is required.
 
+## Ubuntu ARM64 desktop launcher
+
+The repository root contains [`Launch AIConstructVisualizer.desktop`](./Launch%20AIConstructVisualizer.desktop), a double-click launcher configured for Ubuntu ARM64 desktops.
+
+It performs the following steps:
+
+1. Reuses an existing AIConstructVisualizer server if one is already running.
+2. Starts a loopback-only Python server when needed, preferring port `4173` and safely skipping ports used by other applications.
+3. Opens a new tab in a browser that is already running.
+4. If no browser is running, tries Chrome/Chromium, Firefox/Mozilla, other common Linux browsers, then the system URL opener.
+
+The checked-in shortcut targets the Ubuntu ARM64 checkout at `/home/edgesecure/AIBrain`. The helper script itself resolves its own location, but the `.desktop` file's `Exec`, `TryExec`, and `Path` values must be updated if the checkout moves or another user clones the repository elsewhere. Server PID, port, and diagnostic logs are written to the ignored `.runtime/` directory. On a normal Ubuntu desktop, the server runs as a transient `systemd --user` unit so it remains alive after the launcher closes; a detached-process fallback is included for sessions without a user service manager.
+
+The shortcut and helper script must be executable. The repository stores those executable bits, but some Ubuntu file managers may still ask you to right-click the shortcut and select **Allow Launching** the first time.
+
+You can exercise only the server-detection path from a terminal without opening a browser:
+
+```bash
+AICONSTRUCT_NO_BROWSER=1 ./launch-ai-construct-visualizer-ubuntu-arm64.sh
+```
+
+Set `AICONSTRUCT_PORT` to change the preferred port. The launcher requires `bash`, `python3`, and `curl`; browser fallback additionally uses `xdg-open` or `gio` when available. It runs only when the shortcut or helper is launched, does not install a persistent service, and does not start at login.
+
 ## The active constructs
 
 | Construct | Visual model | Served page |
